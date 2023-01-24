@@ -1,19 +1,14 @@
-/**
- * A class that stores subclasses of Person as a contact list.
- * The user is presented with a menu of options and may add, sort,
- * search, or list the contacts.
- *
- * Created for Menlo School CS2
- *
- * @author: Ms. Namasivayam & Mr. Blick
- * @version: 2022-2023
- */
-
+//Aidan Skinner
+import java.util.ArrayList;
+import java.util.Scanner;
 public class ContactList
 {
-    // TODO: Create your array contacts
+    private ArrayList<Person> contacts;
 
-    // TODO: Write a Constructor
+
+    public ContactList() {
+        this.contacts = new ArrayList<Person>();
+    }
 
     public void printMenuOptions() {
         System.out.println("Menu: ");
@@ -33,14 +28,44 @@ public class ContactList
      * to the contact list
      */
     public void addContact() {
-        // TODO: Complete the addContact method
+        Scanner s  = new Scanner(System.in);
+        int input = s.nextInt();
+        if (input == 1) {
+            System.out.println("Select a type of contact to add:\n1. Student\n2. Teacher");
+            int typeContact = s.nextInt();
+            s.nextLine();
+            if (typeContact == 1) {
+                System.out.println("First Name:");
+                String fN = s.nextLine();
+                System.out.println("Last Name:");
+                String lN = s.nextLine();
+                System.out.println("Phone Number:");
+                String pN = s.nextLine();
+                System.out.println("Grade:");
+                int grade = s.nextInt();
+                contacts.add(new Student(fN, lN, pN, grade));
+            }
+            else if(typeContact == 2) {
+                System.out.println("First Name:");
+                String fN = s.nextLine();
+                System.out.println("Last Name:");
+                String lN = s.nextLine();
+                System.out.println("Phone Number:");
+                String pN = s.nextLine();
+                System.out.println("Subject:");
+                String subject = s.nextLine();
+                contacts.add(new Teacher(fN, lN, pN, subject));
+            }
+        }
     }
 
     /**
      * Loops through and prints all contacts
      */
     public void printContacts() {
-        // TODO: Complete the printContacts method
+        for (Person p : contacts) {
+            System.out.println(p);
+        }
     }
 
     /**
@@ -49,20 +74,88 @@ public class ContactList
      * @param sortBy: 0=firstName, 1=lastName, 2=phoneNumber
      */
     public void sort(int sortBy) {
-        // TODO: Complete the sort method
+
+    int size = contacts.size();
+
+    if (sortBy == 0) {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (contacts.get(j).getFirstName().compareTo(contacts.get(j + 1).getFirstName()) > 1) {
+                    Person temp = contacts.get(j);
+                    contacts.set(j, contacts.get(j + 1));
+                    contacts.set(j + 1, temp);
+
+                }
+            }
+        }
+        printContacts();
     }
 
-    // TODO: Write searchByFirstName
+    else if (sortBy == 1) {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (contacts.get(j).getLastName().compareTo(contacts.get(j + 1).getLastName()) > 1) {
+                    Person temp = contacts.get(j);
+                    contacts.set(j, contacts.get(j + 1));
+                    contacts.set(j + 1, temp);
+                }
+            }
+        }
+        printContacts();
+    }
 
-    // TODO: Write searchByLastName
+    else if (sortBy == 2) {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (contacts.get(j).getPhoneNumber().compareTo(contacts.get(j + 1).getPhoneNumber()) > 1) {
+                    Person temp = contacts.get(j);
+                    contacts.set(j, contacts.get(j + 1));
+                    contacts.set(j + 1, temp);
+                }
+            }
+        }
+        printContacts();
+    }
+}
 
-    // TODO: Write searchByPhoneNumber
+
+    public Person searchByFirstName(String firstName) {
+        for (Person name : contacts) {
+            if (firstName.equals(name.getFirstName())) {
+                return name;
+            }
+        }
+        return null;
+    }
+
+    public Person searchByLastName(String lastName) {
+        for (Person name : contacts) {
+            if (lastName.equals(name.getLastName())) {
+                return name;
+            }
+        }
+        return null;
+    }
+
+    public Person searchByPhoneNumber(String phoneNumber) {
+        for (Person name : contacts) {
+            if (phoneNumber.equals(name.getPhoneNumber())) {
+                return name;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Lists just the Student objects in the Contact List
      */
     public void listStudents() {
-        // TODO: Complete the listStudents method
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i) instanceof Student ) {
+                System.out.println(contacts.get(i));
+            }
+        }
     }
 
     /**
@@ -70,9 +163,23 @@ public class ContactList
      * until the user exits
      */
     public void run() {
+        Scanner s  = new Scanner(System.in);
         System.out.println("Welcome to your Contacts List");
         System.out.println("Please pick from the following menu options");
-        printMenuOptions();
+        int userInput = s.nextInt();
+        s.nextLine();
+        while (true) {
+            printMenuOptions();
+            if (userInput == 0) {
+                break;
+            }
+            else if (userInput == 1) {
+                addContact();
+            }
+            else if (userInput == 2) {
+
+            }
+        }
 
         // TODO: Complete the run method
     }
