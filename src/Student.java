@@ -3,6 +3,7 @@ public class Student extends Person {
     // TODO: Modify and complete this class
     private int grade;
 
+    // Constructor for Student object
     public Student(String firstName, String lastName, String phoneNumber, int grade) {
         super(firstName, lastName, phoneNumber);
         this.grade = grade;

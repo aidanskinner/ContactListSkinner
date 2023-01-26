@@ -2,6 +2,7 @@
 public class Teacher extends Person {
     private String subject;
 
+    // Constructor for Teacher object
     public Teacher(String firstName, String lastName, String phoneNumber, String subject) {
         super(firstName, lastName, phoneNumber);
         this.subject = subject;
